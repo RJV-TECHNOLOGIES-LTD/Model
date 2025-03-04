@@ -42,4 +42,4 @@ This Code of Conduct is final, absolute, and irrevocable. Any engagement with RJ
 
 **Failure to comply is not an option.**
 
-**RJV TECHNOLOGIES LTD is not just leading AI execution. We are defining the future.
+RJV TECHNOLOGIES LTD is not just leading AI execution, we are defining the future!
