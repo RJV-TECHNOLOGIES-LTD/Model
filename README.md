@@ -205,16 +205,11 @@ For full contribution guidelines, refer to [CONTRIBUTING.md](https://github.com/
 
 ---
 
-## Licensing & Corporate Use
-
-This software is licensed under the **GNU General Public License v3.0**. For enterprise licensing, refer to [LICENSE](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/LICENSE) or contact support@rjvtechnologies.com.
-
----
-
 ## Enterprise Support & Contact
 
 - Email: support@rjvtechnologies.com
 - Phone: +44 20 7946 0123
 - Website: [www.rjvtechnologies.com](https://www.rjvtechnologies.com)
 
-© 2024 RJV Technologies Ltd. All Rights Reserved.
+© 2024 RJV Technologies Ltd. All Rights Reserved Under the **GNU General Public License v3.0**. For enterprise licensing, refer to [LICENSE](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/LICENSE) 
+
