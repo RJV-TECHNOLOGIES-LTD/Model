@@ -5,3 +5,7 @@ monitoring:
   log_location: "logs/"
   dashboard: "grafana"
   alerts: "slack, email"
+  performance_metrics:
+    - accuracy
+    - latency
+    - throughput

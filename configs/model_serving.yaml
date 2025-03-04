@@ -1,0 +1,10 @@
+model_serving:
+  framework: "TensorFlow Serving"
+  batch_size: 16
+  concurrency: 4
+  optimization:
+    quantization: "INT8"
+    auto_tuning: true
+  logging:
+    request_tracking: true
+    response_time: true
