@@ -9,7 +9,6 @@ We will cover everything from the initial setup of the development environment t
 By following this guide, you will be equipped to run the Quantum AI Execution Engine in both local and cloud environments, ensuring it is capable of handling high computational loads and real-time data analysis at scale.
 
 Table of Contents
-Introduction
 
 Overview of the Quantum AI Execution Engine
 Purpose of the Guide
@@ -18,6 +17,7 @@ Step 1: Cloning the Repository
 Installing Git
 Cloning the Repository
 Initializing Git Submodules (if applicable)
+
 Step 2: Setting Up the Python Environment
 
 Installing Python (Version 3.7 or Higher)
@@ -25,21 +25,25 @@ Verifying Python Installation
 Creating and Activating a Virtual Environment
 Installing Dependencies
 Verifying Dependency Installation
+
 Step 3: Configuring the System
 
 Setting Up the .env File for Environment Variables
 Additional Configuration in settings.yaml
 Confirming Environment Variables and Configuration
+
 Step 4: Running the System
 
 Running the System Locally (Without Docker)
 Running the System with Docker (Containerized Setup)
 Verifying the System is Running Locally or in Docker
+
 Step 5: Testing the System with Real Data
 
 Preparing Real or Simulated Data for Testing (Gravitational Waves, Cosmic Acceleration)
 Running AI Models on Real Data
 Verifying the Output and Anomalies Detection
+
 Step 6: Cloud Deployment for Scaling and High Availability
 
 Setting Up AWS EC2 Instance
@@ -48,12 +52,14 @@ Transferring Project Files to EC2
 Building Docker Image and Running Containers
 Setting Up a Domain Name and HTTPS for Secure Communication
 Auto-Scaling with AWS EC2 Auto Scaling Group and Load Balancer
+
 Step 7: Continuous Monitoring, CI/CD Enhancements, and Disaster Recovery
 
 Setting Up Cloud Monitoring (AWS CloudWatch, Google Stackdriver, Azure Monitor)
 Collecting and Aggregating Logs with ELK Stack or CloudWatch Logs
 Enhancing CI/CD Pipeline with GitHub Actions
 Implementing Disaster Recovery and Backup Strategies for High Availability
+
 Step 8: Performance Tuning, Scaling, and Cloud Optimizations
 
 Optimizing AI Model Inference (GPU Acceleration, Mixed Precision)
@@ -63,6 +69,7 @@ Performance Tuning and Cost Optimization Strategies
 Step 9: Conclusion
 
 Summary of Achievements
+
 Next Steps for Ongoing Improvements and Optimization
 
 ### **Step 1: Clone the Repository**
