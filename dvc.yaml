@@ -1,0 +1,15 @@
+stages:
+  preprocess:
+    cmd: python scripts/preprocess.py data/raw data/processed
+    deps:
+      - scripts/preprocess.py
+      - data/raw
+    outs:
+      - data/processed
+  train:
+    cmd: python scripts/train.py data/processed model.pkl
+    deps:
+      - scripts/train.py
+      - data/processed
+    outs:
+      - model.pkl
