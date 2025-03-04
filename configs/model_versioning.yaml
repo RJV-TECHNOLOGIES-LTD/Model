@@ -1,8 +1,0 @@
-model_versioning:
-  enabled: true
-  storage: "S3"
-  rollback_enabled: true
-  logging:
-    version_changes: true
-    metadata_tracking: true
-    checksum_validation: true
