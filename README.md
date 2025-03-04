@@ -27,16 +27,16 @@ The Φ(a)-Optimized AI Execution Engine is an advanced AI execution framework de
 
 ## Documentation & Quick Access
 
-- [Installation & Configuration Guide](documentation/INSTALLATION.md)
-- [Execution Framework & Model Routing](documentation/EXECUTION_WORKFLOW.md)
-- [API Documentation](documentation/API_REFERENCE.md)
-- [AI Model Training & Inference](documentation/TRAINING_INFERENCE.md)
+- [Installation & Configuration Guide](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/INSTALLATION.md)
+- [Execution Framework & Model Routing](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/EXECUTION_WORKFLOW.md)
+- [API Documentation](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/API_REFERENCE.md)
+- [AI Model Training & Inference](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/TRAINING_INFERENCE.md)
 - [Security & Compliance Guide](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/SECURITY.md)
-- [Frequently Asked Questions (FAQ)](documentation/FAQ.md)
-- [Troubleshooting Guide](documentation/TROUBLESHOOTING.md)
-- [Third-Party Dependencies & Links](documentation/THIRD_PARTY.md)
-- [Jupyter Notebook Examples](documentation/JUPYTER_EXAMPLES.md)
-- [Video Demonstrations & Tutorials](documentation/VIDEO_TUTORIALS.md)
+- [Frequently Asked Questions (FAQ)](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/FAQ.md)
+- [Troubleshooting Guide](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/TROUBLESHOOTING.md)
+- [Third-Party Dependencies & Links](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/THIRD_PARTY.md)
+- [Jupyter Notebook Examples](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/JUPYTER_EXAMPLES.md)
+- [Video Demonstrations & Tutorials](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/VIDEO_TUTORIALS.md)
 
 ---
 
@@ -115,7 +115,7 @@ python scripts/benchmarking.py --model models/model_v3.pkl --parallel --cache-en
 - Automated Security Patching – AI-driven threat detection and mitigation.
 - Regulatory Compliance – GDPR, HIPAA, ISO 27001, NIST 800-53, CCPA.
 
-For complete details, see [Security & Compliance Guide](documentation/SECURITY.md).
+For complete details, see [Security & Compliance Guide](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/SECURITY.md).
 
 ---
 
@@ -135,13 +135,13 @@ flake8 src/
 pre-commit run --all-files
 ```
 
-For full contribution guidelines, refer to [CONTRIBUTING.md](documentation/CONTRIBUTING.md).
+For full contribution guidelines, refer to [CONTRIBUTING.md](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/CONTRIBUTING.md).
 
 ---
 
 ## Licensing & Corporate Use
 
-This software is licensed under the **GNU General Public License v3.0**. For enterprise licensing, refer to [LICENSE](LICENSE) or contact support@rjvtechnologies.com.
+This software is licensed under the **GNU General Public License v3.0**. For enterprise licensing, refer to [LICENSE](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/LICENSE) or contact support@rjvtechnologies.com.
 
 ---
 
