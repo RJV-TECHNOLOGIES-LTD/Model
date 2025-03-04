@@ -4,7 +4,7 @@ Welcome to the **RJV TECHNOLOGIES LTD Model** repository.
 
 We are not just setting a **new global standard** for AI execution—we are redefining the **fundamental paradigm of computational intelligence**. 
 
-This system is designed in absolute **compliance with the Unified Model of Gravity, Dark Matter, and Dark Energy via Φ(a)**, ensuring that every aspect of AI execution adheres to the **underlying mathematical, theoretical, and physical laws governing spacetime, quantum interactions and energy distribution**.
+This system is designed in absolute **compliance with the Unified Model via Φ(a)**, ensuring that every aspect of AI execution adheres to the **underlying mathematical, theoretical, and physical laws governing spacetime, quantum interactions and energy distribution**.
 ## How to Contribute
 We welcome contributions from researchers, developers, and engineers who want to push AI execution to the **next frontier**. The process of contributing follows a strict compliance model with **Unified Model principles** to maintain **scientific, computational, and security integrity**.
 
