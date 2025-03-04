@@ -31,7 +31,7 @@ The Φ(a)-Optimized AI Execution Engine is an advanced AI execution framework de
 - [Execution Framework & Model Routing](documentation/EXECUTION_WORKFLOW.md)
 - [API Documentation](documentation/API_REFERENCE.md)
 - [AI Model Training & Inference](documentation/TRAINING_INFERENCE.md)
-- [Security & Compliance Guide](documentation/SECURITY.md)
+- [Security & Compliance Guide](https://github.com/RJV-TECHNOLOGIES-LTD/Model/blob/main/SECURITY.md)
 - [Frequently Asked Questions (FAQ)](documentation/FAQ.md)
 - [Troubleshooting Guide](documentation/TROUBLESHOOTING.md)
 - [Third-Party Dependencies & Links](documentation/THIRD_PARTY.md)
