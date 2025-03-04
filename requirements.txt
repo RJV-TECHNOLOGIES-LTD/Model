@@ -1,0 +1,6 @@
+torch>=2.0.0
+numpy>=1.21
+scipy>=1.8.0
+matplotlib>=3.4.3
+CUDA>=11.8  # Only for NVIDIA GPU acceleration
+ROCm>=5.0  # Only for AMD GPU acceleration
