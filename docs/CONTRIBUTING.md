@@ -8,11 +8,6 @@ This system is designed in absolute **compliance with the Unified Model of Gravi
 ## How to Contribute
 We welcome contributions from researchers, developers, and engineers who want to push AI execution to the **next frontier**. The process of contributing follows a strict compliance model with **Unified Model principles** to maintain **scientific, computational, and security integrity**.
 
-## Contribution Process
-To maintain the **highest scientific and computational rigor**, all contributions must be deeply aligned with the **Unified Model’s tensor-based principles, AI execution dynamics and computational efficiency mandates**.
-
-Every contribution must **surpass current industry limitations** through rigorous **AI-assisted validation, quantum-informed optimization, and empirical verification**.
-
 To contribute, follow these steps:
 1. **Fork the Repository:** Click the **Fork** button on GitHub to create a copy under your account.
 2. **Clone Your Fork:** Run the following command in your terminal:
