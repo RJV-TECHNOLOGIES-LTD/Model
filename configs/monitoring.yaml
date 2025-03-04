@@ -1,0 +1,7 @@
+monitoring:
+  enabled: true
+  logging_level: "verbose"
+  save_logs: true
+  log_location: "logs/"
+  dashboard: "grafana"
+  alerts: "slack, email"
