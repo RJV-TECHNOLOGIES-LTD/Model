@@ -7,3 +7,4 @@ ab_testing:
     - accuracy
     - recall
     - precision
+    - latency

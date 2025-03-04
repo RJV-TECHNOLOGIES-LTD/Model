@@ -5,3 +5,4 @@ model_versioning:
   logging:
     version_changes: true
     metadata_tracking: true
+    checksum_validation: true

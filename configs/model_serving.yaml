@@ -8,3 +8,4 @@ model_serving:
   logging:
     request_tracking: true
     response_time: true
+    error_logging: true
