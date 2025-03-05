@@ -1,8 +1,8 @@
-**1️⃣ `serverless_ai_setup.md`**
+**1️⃣ `Serverless AI Setup`**
 
 Here is the **detailed and comprehensive guide** for setting up **serverless AI execution**.
 
-```md
+```
 # 🚀 **Serverless AI Setup for Unified Model Execution**
 ## **Industry-Standard AI Execution - Fully Automated, Self-Healing, and Scalable**
 
