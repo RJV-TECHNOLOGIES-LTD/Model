@@ -130,7 +130,8 @@ This AI execution model is the **first to be fully aligned with international co
 
 ## 10. Research & Whitepapers: The Unified Model as the Foundation of AI Execution
 
-- **[Unified Model of Gravity, Dark Matter, and Dark Energy via Φ(a)](docs/gravity_unified_model.pdf)**
+- **[Unified Model via Φ(a)](https://www.linkedin.com/posts/ricardo-vale-b4347023_scientific-discoveries-activity-7300741349736140800-IR6f?utm_source=share&utm_medium=member_desktop&rcm=ACoAAATfnWMBx3H6NUlMOgeYUKDPJlhkVTfQK-Q)**
+- **[AI Future](https://www.linkedin.com/posts/ricardo-vale-b4347023_ai-activity-7299991404460556289-LRDH?utm_source=share&utm_medium=member_desktop&rcm=ACoAAATfnWMBx3H6NUlMOgeYUKDPJlhkVTfQK-Q)**
 - **Author:** Ricardo Jorge Do Vale, RJV Technologies LTD
 
 This paper **proves that AI execution constraints emerge naturally from gravitational tensor dynamics**, ensuring that the **Φ(a)-Optimized AI Execution Engine is the only theoretically complete model of AI execution**.
