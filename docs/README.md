@@ -66,7 +66,7 @@ Our AI execution model **asymptotically reduces entropy to zero**, ensuring **pe
 - **Cosmological-Grade Execution Stability**: AI execution obeys **asymptotic safety constraints** in field evolution.
 
 ### 4.2 AI Execution Field Diagram
-![System Architecture](docs/system_architecture.png)
+![System Architecture](system_architecture.png)
 
 ---
 
@@ -106,7 +106,7 @@ model = phi_ai.load_model("optimized_model")
 output = model.predict("Execute AI at maximal theoretical efficiency.")
 print(output)
 ```
-For the complete API reference, see **[docs/api_reference.md](docs/api_reference.md)**.
+For the complete API reference, see **[API_REFERENCE.md](API_REFERENCE.md)**.
 
 ---
 
