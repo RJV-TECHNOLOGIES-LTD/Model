@@ -225,6 +225,6 @@ reboot
 # **8. Support and Issue Reporting**  
 For unresolved issues:  
 - **Report a GitHub Issue:** [https://github.com/RJV-TECHNOLOGIES-LTD/Model/issues](https://github.com/RJV-TECHNOLOGIES-LTD/Model/issues)  
-- **Enterprise Support:** Contact **support@rjvtech.com**  
+- **Enterprise Support:** Contact **support@rjvtechnologies.com**  
 
 This guide guarantees **error-free installation, configuration, and execution across all platforms.**
