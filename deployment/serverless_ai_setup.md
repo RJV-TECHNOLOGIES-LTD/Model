@@ -3,9 +3,6 @@
 Here is the **detailed and comprehensive guide** for setting up **serverless AI execution**.
 
 ```
-# 🚀 Serverless AI Setup for Unified Model Execution
-# Industry-Standard AI Execution - Fully Automated, Self-Healing and Scalable
-
 # Overview
 This guide outlines the step-by-step process for setting up and deploying AI models serverlessly using AWS Lambda, Azure Functions and GCP Cloud Run.
 
