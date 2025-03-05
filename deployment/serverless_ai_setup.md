@@ -2,7 +2,7 @@
 
 Here is the **detailed and comprehensive guide** for setting up **serverless AI execution**.
 
-```
+
 # Overview
 This guide outlines the step-by-step process for setting up and deploying AI models serverlessly using AWS Lambda, Azure Functions and GCP Cloud Run.
 
@@ -29,6 +29,7 @@ Before deploying, ensure you have:
 - Serverless Framework CLI installed.
 
 Install the Serverless Framework:
+```
 bash
 npm install -g serverless
 ```
