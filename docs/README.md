@@ -66,7 +66,7 @@ Our AI execution model **asymptotically reduces entropy to zero**, ensuring **pe
 - **Cosmological-Grade Execution Stability**: AI execution obeys **asymptotic safety constraints** in field evolution.
 
 ### 4.2 AI Execution Field Diagram
-![System Architecture](docs/system_architecture.png)
+![System Architecture](system_architecture.png)
 
 ---
 
