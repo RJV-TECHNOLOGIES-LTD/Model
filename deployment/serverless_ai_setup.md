@@ -4,16 +4,16 @@ Here is the **detailed and comprehensive guide** for setting up **serverless AI 
 
 ```
 # 🚀 Serverless AI Setup for Unified Model Execution
-## Industry-Standard AI Execution - Fully Automated, Self-Healing and Scalable
+# Industry-Standard AI Execution - Fully Automated, Self-Healing and Scalable
 
-### Overview
+# Overview
 This guide outlines the step-by-step process for setting up and deploying AI models serverlessly using AWS Lambda, Azure Functions and GCP Cloud Run.
 
 This setup supports Hybrid Cloud and Edge AI Execution with automatic scaling and real-time performance optimization. 
 
 The AI models are built for Unified Model AI, incorporating gravitational AI, quantum AI and tensor computation.
 
-### Benefits of Serverless AI Execution
+# Benefits of Serverless AI Execution
 - Zero Infrastructure Management: Run AI models without needing to manage virtual machines or GPUs.
 - Automatic Scaling: AI models scale automatically based on request load.
 - Cost-Effective: You only pay for what you use (AI models are only active when triggered).
@@ -23,7 +23,7 @@ The AI models are built for Unified Model AI, incorporating gravitational AI, qu
 
 ---
 
-## 1️⃣ Pre-Requisites
+# 1️⃣ Pre-Requisites
 Before deploying, ensure you have:
 - A trained AI model in ONNX, TensorFlow, or PyTorch format.
 - An AWS, Azure, or GCP account.
