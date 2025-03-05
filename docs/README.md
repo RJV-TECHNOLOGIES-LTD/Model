@@ -106,7 +106,7 @@ model = phi_ai.load_model("optimized_model")
 output = model.predict("Execute AI at maximal theoretical efficiency.")
 print(output)
 ```
-For the complete API reference, see **[API_REFERENCE.md](docs/API_REFERENCE.md)**.
+For the complete API reference, see **[API_REFERENCE.md](API_REFERENCE.md)**.
 
 ---
 
