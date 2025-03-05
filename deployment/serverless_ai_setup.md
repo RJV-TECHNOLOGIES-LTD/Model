@@ -1,9 +1,5 @@
-**Serverless AI Setup**
-
-Here is the **detailed and comprehensive guide** for setting up **serverless AI execution**.
-
-
 # Overview
+
 This guide outlines the step-by-step process for setting up and deploying AI models serverlessly using AWS Lambda, Azure Functions and GCP Cloud Run.
 
 This setup supports Hybrid Cloud and Edge AI Execution with automatic scaling and real-time performance optimization. 
