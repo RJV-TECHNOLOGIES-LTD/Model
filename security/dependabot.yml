@@ -1,1 +1,109 @@
-# Placeholder for dependabot.yml
+# =======================================================================
+# 🚀 INDUSTRY-LEADING DEPENDABOT CONFIGURATION FOR AUTOMATED DEPENDENCY UPDATES
+# ✅ Ensures Secure, Consistent, and Up-to-Date Dependencies for AI Models
+# =======================================================================
+version: 2
+updates:
+  # --------------------------------------------------------
+  # 🔹 Update Strategy for Python dependencies (pip)
+  # --------------------------------------------------------
+  - package-ecosystem: "pip"
+    directory: "/"  # Location of your requirements.txt or Pipfile
+    schedule:
+      interval: "weekly"  # Update frequency for pip dependencies (can be "daily", "weekly", or "monthly")
+    commit-message:
+      prefix: "chore"  # Customize commit message prefix
+    versioning-strategy: "increase"  # This will allow upgrading to the latest versions, even if it involves major version changes.
+    
+  # --------------------------------------------------------
+  # 🔹 Update Strategy for Docker dependencies
+  # --------------------------------------------------------
+  - package-ecosystem: "docker"
+    directory: "/"  # Location of your Dockerfile
+    schedule:
+      interval: "weekly"  # Update frequency for Docker dependencies
+    commit-message:
+      prefix: "fix"  # Customize commit message prefix for Docker updates
+    versioning-strategy: "increase"  # Upgrade to the latest versions of Docker images, including major versions
+
+  # --------------------------------------------------------
+  # 🔹 Update Strategy for JavaScript (npm or yarn)
+  # --------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/"  # Location of your package.json
+    schedule:
+      interval: "monthly"  # Update frequency for npm dependencies
+    commit-message:
+      prefix: "chore"  # Customize commit message prefix
+    versioning-strategy: "increase"  # Always pull the latest stable version of dependencies
+
+  # --------------------------------------------------------
+  # 🔹 Update Strategy for Ruby dependencies
+  # --------------------------------------------------------
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "fix"
+    versioning-strategy: "increase"
+
+  # --------------------------------------------------------
+  # 🔹 Update Strategy for Go dependencies
+  # --------------------------------------------------------
+  - package-ecosystem: "go"
+    directory: "/"  # Location of your Go modules (go.mod)
+    schedule:
+      interval: "monthly"  # Update frequency for Go dependencies
+    commit-message:
+      prefix: "chore"
+    versioning-strategy: "increase"  # Allow automatic upgrades to the latest versions
+
+  # --------------------------------------------------------
+  # 🔹 Update Strategy for Java dependencies (maven)
+  # --------------------------------------------------------
+  - package-ecosystem: "maven"
+    directory: "/"  # Location of your pom.xml
+    schedule:
+      interval: "monthly"  # Update frequency for Maven dependencies
+    commit-message:
+      prefix: "fix"
+    versioning-strategy: "increase"  # Version upgrades are done automatically
+
+  # --------------------------------------------------------
+  # 🔹 Enable Security Updates for All Ecosystems
+  # --------------------------------------------------------
+  - package-ecosystem: "all"
+    directory: "/"
+    schedule:
+      interval: "daily"  # Schedule security updates to run every day
+    commit-message:
+      prefix: "security"  # Commit message prefix for security patches
+    versioning-strategy: "auto"  # Dependabot will upgrade only to patch versions that are compatible with the current version constraints
+
+# --------------------------------------------------------
+# 🔹 Configuring Dependency Reviews
+# --------------------------------------------------------
+dependency-review:
+  enable: true  # Enable reviews for pull requests related to dependencies
+  reviewers:
+    - "@your-username"
+    - "@team-name"  # Specify teams or users to automatically review dependency updates
+
+# --------------------------------------------------------
+# 🔹 Additional Configuration for GitHub Security Scanning
+# --------------------------------------------------------
+security-updates:
+  enabled: true  # Enable security update notifications for GitHub
+
+# --------------------------------------------------------
+# 🔹 Versioning Strategy Details
+# --------------------------------------------------------
+versioning-strategy:
+  # This strategy allows dependencies to upgrade to any higher version (including breaking changes)
+  increase: 
+    major: true  # Allow updates to any higher version, including major version changes
+    minor: true  # Allow updates to minor version changes
+    patch: true  # Allow updates to patch version changes
+  # Alternatively, use "lockfile-only" to only update lockfiles for security patches
+  lockfile-only: true  # Lockfiles will be updated to reflect updates on package installations
