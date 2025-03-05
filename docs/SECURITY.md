@@ -33,7 +33,11 @@ This approach renders **conventional cybersecurity threats meaningless** because
 
 ## **II. Zero-Probability Execution Surface (ZPES) and Unified Model-Based AI Protection**  
 
-The most vulnerable aspect of any computational system is its **attack surface**—the exposed entry points through which malicious actors attempt to gain access, manipulate data, or execute unauthorized commands. Traditional cybersecurity models attempt to **minimize attack surfaces through network segmentation, authentication barriers, and layered encryption**. However, these methods **still acknowledge the existence of an attackable state**.
+The most vulnerable aspect of any computational system is its **attack surface**—the exposed entry points through which malicious actors attempt to gain access, manipulate data, or execute unauthorized commands. 
+
+Traditional cybersecurity models attempt to **minimize attack surfaces through network segmentation, authentication barriers, and layered encryption**. 
+
+However, these methods **still acknowledge the existence of an attackable state**.
 
 The **Zero-Probability Execution Surface (ZPES)**, introduced within the **Φ(a) paradigm**, eliminates this flaw at its root. In this model:  
 
