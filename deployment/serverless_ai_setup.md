@@ -1,4 +1,3 @@
----
 **1️⃣ `Serverless AI Setup`**
 
 Here is the **detailed and comprehensive guide** for setting up **serverless AI execution**.
