@@ -16,7 +16,7 @@ The AI models are built for Unified Model AI, incorporating gravitational AI, qu
 - Cost-Effective: You only pay for what you use (AI models are only active when triggered).
 - Self-Healing Execution: If a failure occurs, the system automatically recovers and retries.
 - Hybrid Cloud Support: Seamlessly switches between cloud and edge devices.
-- **Security and Compliance: Ensures encrypted AI models, secure IAM roles, and access-controlled AI execution.
+- Security and Compliance: Ensures encrypted AI models, secure IAM roles and access-controlled AI execution.
 
 ---
 
