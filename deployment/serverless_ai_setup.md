@@ -23,16 +23,16 @@ The AI models are built for Unified Model AI, incorporating gravitational AI, qu
 
 ---
 
-## **1️⃣ Pre-Requisites**
+## 1️⃣ Pre-Requisites
 Before deploying, ensure you have:
-- A **trained AI model** in **ONNX, TensorFlow, or PyTorch** format.
-- An **AWS, Azure, or GCP account**.
-- **Docker** for local testing of serverless AI models.
-- **Terraform** for automated infrastructure deployment.
-- **Serverless Framework** CLI installed.
+- A trained AI model in ONNX, TensorFlow, or PyTorch format.
+- An AWS, Azure, or GCP account.
+- Docker for local testing of serverless AI models.
+- Terraform for automated infrastructure deployment.
+- Serverless Framework CLI installed.
 
 Install the Serverless Framework:
-```bash
+bash
 npm install -g serverless
 ```
 
