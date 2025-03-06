@@ -1,0 +1,1 @@
+# Placeholder for docs/training_guide.md
