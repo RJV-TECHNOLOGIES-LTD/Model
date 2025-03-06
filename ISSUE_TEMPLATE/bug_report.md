@@ -1,1 +1,0 @@
-# Placeholder for bug_report.md
