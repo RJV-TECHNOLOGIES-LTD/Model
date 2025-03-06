@@ -1,23 +1,25 @@
-# Base image with CUDA support for GPU acceleration
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+# Use official Python image as base
+FROM python:3.9-slim
 
-# Set working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Install Python dependencies
-RUN apt-get update && apt-get install -y python3 python3-pip && \
-    pip3 install --no-cache-dir \
-        torch torchvision torchaudio \
-        flask grpcio grpcio-tools protobuf \
-        numpy pandas websocket-client \
-        onnxruntime tensorflow tensorflow-lite
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy source files
+# Copy and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the entire project to the container
 COPY . .
 
 # Expose API ports
 EXPOSE 5000  # REST API
 EXPOSE 50051 # gRPC API
 
-# Set entrypoint
-CMD ["python3", "interfaces_api/rest_api.py"]
+# Command to run the application
+CMD ["python", "interfaces_api/rest_api.py"]
