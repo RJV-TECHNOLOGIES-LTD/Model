@@ -1,74 +1,55 @@
-import torch
-import onnxruntime
-import tensorflow.lite as tflite
-import logging
+import hashlib
 import os
 
 class InferenceEngine:
     def __init__(self, model_format, model_path):
         """
-        Initialize inference engine and load the model.
+        Initialize inference engine and verify model integrity.
 
-        :param model_format: Format of the model (h5, onnx, tflite)
+        :param model_format: Format of the model (h5, onnx, tflite).
         :param model_path: Path to the model file.
         """
         self.model_format = model_format
         self.model_path = model_path
+        self.signature_path = os.path.join("security_integrity", "model_verification.sig")
+
+        # Verify model integrity before loading
+        checkpoint_name = os.path.basename(self.model_path)
+        if not self.verify_signature(checkpoint_name):
+            logging.error("Model integrity verification failed. Aborting inference.")
+            raise ValueError("Model integrity verification failed. The model may be corrupted.")
+
         self.model = self.load_model()
 
-    def load_model(self):
+    def verify_signature(self, checkpoint_name):
         """
-        Load the AI model from the correct format.
+        Verify the integrity of a model checkpoint using SHA256.
+
+        :param checkpoint_name: Filename of the checkpoint.
+        :return: Boolean indicating whether the model is valid.
         """
-        if not os.path.exists(self.model_path):
-            logging.error(f"Model file not found: {self.model_path}")
-            raise FileNotFoundError(f"Model file not found: {self.model_path}")
+        checkpoint_path = os.path.join("memory_storage", checkpoint_name)
+        if not os.path.exists(checkpoint_path):
+            logging.error(f"Checkpoint not found for verification: {checkpoint_path}")
+            raise FileNotFoundError(f"Checkpoint not found: {checkpoint_path}")
+
+        if not os.path.exists(self.signature_path):
+            logging.error("Signature file missing. Cannot verify model integrity.")
+            return False
 
         try:
-            if self.model_format == "h5":
-                model = torch.load(self.model_path, map_location="cuda" if torch.cuda.is_available() else "cpu")
-                logging.info(f"Loaded PyTorch model from {self.model_path}")
-            elif self.model_format == "onnx":
-                model = onnxruntime.InferenceSession(self.model_path)
-                logging.info(f"Loaded ONNX model from {self.model_path}")
-            elif self.model_format == "tflite":
-                interpreter = tflite.Interpreter(model_path=self.model_path)
-                interpreter.allocate_tensors()
-                model = interpreter
-                logging.info(f"Loaded TensorFlow Lite model from {self.model_path}")
+            with open(checkpoint_path, "rb") as file:
+                model_hash = hashlib.sha256(file.read()).hexdigest()
+
+            with open(self.signature_path, "r") as sig_file:
+                stored_hash = sig_file.read().strip()
+
+            if model_hash == stored_hash:
+                logging.info("Model integrity verified successfully.")
+                return True
             else:
-                raise ValueError(f"Unsupported model format: {self.model_format}")
-
-            return model
+                logging.error("Model integrity check failed. The model file may have been altered.")
+                return False
         except Exception as e:
-            logging.error(f"Failed to load model: {e}")
-            raise
-
-    def predict(self, input_data):
-        """
-        Perform inference using the loaded model.
-
-        :param input_data: Dictionary containing input tensor.
-        :return: Model prediction.
-        """
-        try:
-            if self.model_format == "h5":
-                input_tensor = torch.tensor(input_data["input"]).to("cuda" if torch.cuda.is_available() else "cpu")
-                output = self.model(input_tensor).cpu().numpy()
-            elif self.model_format == "onnx":
-                input_tensor = {self.model.get_inputs()[0].name: input_data["input"]}
-                output = self.model.run(None, input_tensor)[0]
-            elif self.model_format == "tflite":
-                input_tensor = input_data["input"]
-                input_details = self.model.get_input_details()
-                output_details = self.model.get_output_details()
-                self.model.set_tensor(input_details[0]['index'], input_tensor)
-                self.model.invoke()
-                output = self.model.get_tensor(output_details[0]['index'])
-            else:
-                raise ValueError(f"Unsupported model format: {self.model_format}")
-
-            return output
-        except Exception as e:
-            logging.error(f"Inference failed: {e}")
-            raise
+            logging.error(f"Model verification failed: {e}")
+            return False
