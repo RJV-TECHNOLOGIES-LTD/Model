@@ -18,9 +18,6 @@ grpc_stub = pb2_grpc.InferenceServiceStub(channel)
 
 # Load API Schema from `api_schema.xml`
 def load_api_schema():
-    """
-    Load and parse the API schema.
-    """
     schema_path = "interfaces_api/api_schema.xml"
     if not os.path.exists(schema_path):
         logging.error(f"API Schema file not found: {schema_path}")
@@ -39,21 +36,6 @@ API_SCHEMA = load_api_schema()
 
 @app.route("/infer", methods=["POST"])
 def run_model():
-    """
-    API endpoint for running inference with schema validation.
-
-    Expected JSON Payload:
-    {
-        "input": [0.1, 0.2, 0.3, 0.4]  # Array matching model input shape
-    }
-
-    Returns:
-    {
-        "result": [...],  # Model predictions
-        "status": "success" | "error",
-        "message": "..."  # Any relevant message
-    }
-    """
     data = request.get_json()
 
     # Validate input using API schema
@@ -64,7 +46,6 @@ def run_model():
         return jsonify({"status": "error", "message": "Invalid input format. Expected an array."}), 400
 
     try:
-        # Convert input to gRPC format
         grpc_request = pb2.InferenceRequest(input=data["input"])
         grpc_response = grpc_stub.RunInference(grpc_request)
 
@@ -79,26 +60,15 @@ def run_model():
 
 @app.route("/health", methods=["GET"])
 def health_check():
-    """
-    API endpoint for checking the health of the REST and gRPC inference system.
-    
-    Returns:
-    {
-        "status": "ok",
-        "message": "API is running"
-    }
-    """
     grpc_health_request = pb2.HealthRequest()
     grpc_health_response = grpc_stub.HealthCheck(grpc_health_request)
 
     return jsonify({"status": grpc_health_response.status, "message": grpc_health_response.message}), 200
 
 def start_api_server():
-    """
-    Start the REST API Server.
-    """
     logging.info("Starting REST API Server...")
     app.run(host="0.0.0.0", port=5000)
 
 if __name__ == "__main__":
     start_api_server()
+
