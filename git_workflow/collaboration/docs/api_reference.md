@@ -6,7 +6,16 @@
 **Description:** Executes AI model inference.  
 
 ### **Request Format**
-```json
+
 {
   "input": [0.1, 0.2, 0.3, 0.4]
 }
+
+### **Response Format**
+
+{
+  "status": "success",
+  "result": [...],
+  "message": "Inference completed successfully"
+}
+```json
