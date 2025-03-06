@@ -2,6 +2,7 @@ import faiss
 import numpy as np
 import os
 import logging
+import torch
 
 class ModelCheckpointManager:
     def __init__(self, checkpoint_dir="memory_storage/", vector_memory_path="memory_storage/vector_memory.faiss", dim=512):
@@ -54,29 +55,36 @@ class ModelCheckpointManager:
         except Exception as e:
             logging.error(f"Failed to save FAISS vector memory: {e}")
 
-    def add_model_embedding(self, model_embedding):
+    def save_model_checkpoint(self, model, model_id):
         """
-        Add a model embedding to the FAISS index.
+        Save model checkpoint and add its embedding to FAISS.
 
-        :param model_embedding: The embedding vector of the model.
+        :param model: Trained model instance.
+        :param model_id: Unique model identifier.
         """
-        if not isinstance(model_embedding, np.ndarray):
-            model_embedding = np.array(model_embedding).astype("float32")
+        checkpoint_path = os.path.join(self.checkpoint_dir, f"model_{model_id}.h5")
 
-        if model_embedding.shape[1] != self.dim:
-            raise ValueError(f"Expected vector dimension {self.dim}, got {model_embedding.shape[1]}.")
+        try:
+            # Save model state
+            torch.save(model.state_dict(), checkpoint_path)
+            logging.info(f"Saved model checkpoint: {checkpoint_path}")
 
-        self.index.add(model_embedding)
-        self.save_faiss_index()
-        logging.info(f"Added model embedding to FAISS vector memory.")
+            # Generate and store model embedding in FAISS
+            embedding = model.get_embedding().detach().cpu().numpy().reshape(1, -1)  # Example
+            self.index.add(embedding)
+            self.save_faiss_index()
+
+            logging.info(f"Stored model embedding for model ID: {model_id} in FAISS.")
+        except Exception as e:
+            logging.error(f"Failed to save model checkpoint and embedding: {e}")
 
     def search_similar_models(self, query_embedding, k=5):
         """
-        Search for the nearest similar models based on embedding similarity.
+        Find the nearest trained models using FAISS vector memory.
 
-        :param query_embedding: Query vector for searching similar models.
+        :param query_embedding: Query vector for similarity search.
         :param k: Number of nearest models to retrieve.
-        :return: List of nearest model indices and distances.
+        :return: Nearest model indices.
         """
         if not isinstance(query_embedding, np.ndarray):
             query_embedding = np.array(query_embedding).astype("float32")
@@ -84,3 +92,4 @@ class ModelCheckpointManager:
         query_embedding = query_embedding.reshape(1, -1)  # Ensure correct shape
         distances, indices = self.index.search(query_embedding, k)
         return indices[0], distances[0]
+
