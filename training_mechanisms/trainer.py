@@ -6,6 +6,7 @@ import yaml
 import logging
 from training_mechanisms.loss_functions import compute_loss
 from data_pipeline.dataset_loader import DataLoader
+from memory_storage.model_checkpoints import ModelCheckpointManager
 
 def load_training_config():
     """
@@ -37,7 +38,7 @@ def load_optimizer_config():
         raise
 
 class Trainer:
-    def __init__(self, model, dataset_path, checkpoint_manager):
+    def __init__(self, model, dataset_path):
         """
         Initialize trainer with model, dataset, and checkpoint manager.
         Training parameters are loaded dynamically from `training_config.xml`.
@@ -49,7 +50,7 @@ class Trainer:
         self.dataloader = DataLoader(self.dataset_path).load_data(batch_size=self.config["batch_size"])
         self.criterion = compute_loss
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.checkpoint_manager = checkpoint_manager
+        self.checkpoint_manager = ModelCheckpointManager()
         self.model.to(self.device)
 
         # Set up optimizer based on configuration
@@ -63,6 +64,7 @@ class Trainer:
     def train(self):
         """
         Train model using parameters defined in `training_config.xml`.
+        Save checkpoints at each epoch.
         """
         epochs = self.config["epochs"]
         self.model.train()
@@ -75,4 +77,6 @@ class Trainer:
                 loss.backward()
                 self.optimizer.step()
             logging.info(f"Epoch {epoch + 1}/{epochs} - Loss: {loss.item()}")
+
+            # Save model checkpoint
             self.checkpoint_manager.save_model(self.model, epoch)
