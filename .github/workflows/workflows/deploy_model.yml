@@ -1,1 +1,33 @@
-# Placeholder for .github/workflows/deploy_model.yml
+name: Deploy Model
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Convert Repository Name to Lowercase
+      id: repo_name
+      run: echo "REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+    - name: Log in to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t ghcr.io/${{ env.REPO_NAME }}/ai-inference:latest .
+        docker tag ghcr.io/${{ env.REPO_NAME }}/ai-inference:latest ghcr.io/${{ env.REPO_NAME }}/ai-inference:${{ github.sha }}
+        docker push ghcr.io/${{ env.REPO_NAME }}/ai-inference:latest
+        docker push ghcr.io/${{ env.REPO_NAME }}/ai-inference:${{ github.sha }}
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f deployment_automation/kubernetes_service.yaml
+        kubectl rollout status deployment/ai-inference-service
