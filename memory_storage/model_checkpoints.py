@@ -1,49 +1,86 @@
-import torch
+import faiss
+import numpy as np
 import os
 import logging
 
 class ModelCheckpointManager:
-    def __init__(self, checkpoint_dir="memory_storage/"):
+    def __init__(self, checkpoint_dir="memory_storage/", vector_memory_path="memory_storage/vector_memory.faiss", dim=512):
         """
-        Initialize the checkpoint manager.
-        
-        :param checkpoint_dir: Directory where checkpoints are stored.
+        Initialize model checkpoint manager with FAISS-based vector memory.
+
+        :param checkpoint_dir: Directory where model checkpoints are stored.
+        :param vector_memory_path: Path to FAISS index file.
+        :param dim: Dimension of vectors to be stored (default: 512).
         """
         self.checkpoint_dir = checkpoint_dir
+        self.vector_memory_path = vector_memory_path
+        self.dim = dim
+        self.index = None
+
+        # Ensure storage directory exists
         os.makedirs(self.checkpoint_dir, exist_ok=True)
 
-    def save_model(self, model, epoch):
-        """
-        Save model checkpoint in `.h5` format.
+        # Load or create FAISS index
+        if os.path.exists(self.vector_memory_path):
+            self.load_faiss_index()
+        else:
+            self.create_faiss_index()
 
-        :param model: PyTorch model instance.
-        :param epoch: Training epoch number.
+    def create_faiss_index(self):
         """
-        checkpoint_path = os.path.join(self.checkpoint_dir, f"checkpoint_epoch_{epoch}.h5")
+        Create a new FAISS index for vector storage.
+        """
+        self.index = faiss.IndexFlatL2(self.dim)  # L2 distance for similarity search
+        logging.info("Created new FAISS vector memory index.")
+
+    def load_faiss_index(self):
+        """
+        Load existing FAISS index from file.
+        """
         try:
-            torch.save(model.state_dict(), checkpoint_path)
-            logging.info(f"Model checkpoint saved at: {checkpoint_path}")
+            self.index = faiss.read_index(self.vector_memory_path)
+            logging.info(f"Loaded FAISS vector memory from {self.vector_memory_path}.")
         except Exception as e:
-            logging.error(f"Failed to save model checkpoint: {e}")
-            raise
+            logging.error(f"Failed to load FAISS vector memory: {e}")
+            self.create_faiss_index()
 
-    def load_model(self, model, checkpoint_name):
+    def save_faiss_index(self):
         """
-        Load model checkpoint.
-
-        :param model: PyTorch model instance.
-        :param checkpoint_name: Filename of the checkpoint to load.
-        :return: Model with loaded weights.
+        Save FAISS index to file.
         """
-        checkpoint_path = os.path.join(self.checkpoint_dir, checkpoint_name)
-        if not os.path.exists(checkpoint_path):
-            logging.error(f"Checkpoint not found: {checkpoint_path}")
-            raise FileNotFoundError(f"Checkpoint not found: {checkpoint_path}")
-
         try:
-            model.load_state_dict(torch.load(checkpoint_path, map_location="cuda" if torch.cuda.is_available() else "cpu"))
-            logging.info(f"Loaded model checkpoint from {checkpoint_path}")
-            return model
+            faiss.write_index(self.index, self.vector_memory_path)
+            logging.info(f"Saved FAISS vector memory to {self.vector_memory_path}.")
         except Exception as e:
-            logging.error(f"Failed to load model checkpoint: {e}")
-            raise
+            logging.error(f"Failed to save FAISS vector memory: {e}")
+
+    def add_model_embedding(self, model_embedding):
+        """
+        Add a model embedding to the FAISS index.
+
+        :param model_embedding: The embedding vector of the model.
+        """
+        if not isinstance(model_embedding, np.ndarray):
+            model_embedding = np.array(model_embedding).astype("float32")
+
+        if model_embedding.shape[1] != self.dim:
+            raise ValueError(f"Expected vector dimension {self.dim}, got {model_embedding.shape[1]}.")
+
+        self.index.add(model_embedding)
+        self.save_faiss_index()
+        logging.info(f"Added model embedding to FAISS vector memory.")
+
+    def search_similar_models(self, query_embedding, k=5):
+        """
+        Search for the nearest similar models based on embedding similarity.
+
+        :param query_embedding: Query vector for searching similar models.
+        :param k: Number of nearest models to retrieve.
+        :return: List of nearest model indices and distances.
+        """
+        if not isinstance(query_embedding, np.ndarray):
+            query_embedding = np.array(query_embedding).astype("float32")
+
+        query_embedding = query_embedding.reshape(1, -1)  # Ensure correct shape
+        distances, indices = self.index.search(query_embedding, k)
+        return indices[0], distances[0]
