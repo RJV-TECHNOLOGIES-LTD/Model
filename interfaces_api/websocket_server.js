@@ -25,4 +25,24 @@ wss.on("connection", (ws) => {
     try {
       const requestData = JSON.parse(message);
       if (!requestData.input) {
-        ws.send(JSON.stringify({ status: "error
+        ws.send(JSON.stringify({ status: "error", message: "Missing 'input' field" }));
+        return;
+      }
+
+      grpcClient.RunInference({ input: requestData.input }, (err, response) => {
+        if (err) {
+          console.error("gRPC Error:", err);
+          ws.send(JSON.stringify({ status: "error", message: "Inference failed" }));
+        } else {
+          ws.send(JSON.stringify({ status: response.status, result: response.result }));
+        }
+      });
+    } catch (error) {
+      ws.send(JSON.stringify({ status: "error", message: "Invalid JSON format" }));
+    }
+  });
+
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
+});
