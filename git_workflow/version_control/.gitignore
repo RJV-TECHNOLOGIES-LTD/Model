@@ -1,1 +1,7 @@
-# Placeholder for .gitignore
+# Ignore compiled files
+__pycache__/
+*.pyc
+
+# Ignore environment files
+.env
+venv/

@@ -1,25 +1,19 @@
-import torch
-import torch.nn as nn
-import torch.optim as optim
-import logging
-from training_mechanisms.loss_functions import compute_loss
-from training_mechanisms.optimization_algorithms import get_optimizer
-from data_pipeline.dataset_loader import DataLoader
+from memory_storage.model_checkpoints import ModelCheckpointManager
 
 class Trainer:
-    def __init__(self, model, dataset_path, checkpoint_manager):
-        """Initialize trainer with model, dataset, and checkpoint manager."""
+    def __init__(self, model, dataset_path):
+        """
+        Initialize trainer with model, dataset, checkpoint manager, and FAISS indexing.
+        """
         self.model = model
         self.dataset_path = dataset_path
-        self.dataloader = DataLoader(self.dataset_path).load_data()
-        self.optimizer = get_optimizer(self.model)
-        self.criterion = compute_loss
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.checkpoint_manager = checkpoint_manager
-        self.model.to(self.device)
+        self.checkpoint_manager = ModelCheckpointManager()
 
-    def train(self, epochs=10):
-        """Train model and save checkpoints."""
+    def train(self):
+        """
+        Train model, save checkpoints, and index embeddings in FAISS.
+        """
+        epochs = self.config["epochs"]
         self.model.train()
         for epoch in range(epochs):
             for batch in self.dataloader:
@@ -29,5 +23,11 @@ class Trainer:
                 loss = self.criterion(outputs, targets)
                 loss.backward()
                 self.optimizer.step()
+            
             logging.info(f"Epoch {epoch + 1}/{epochs} - Loss: {loss.item()}")
-            self.checkpoint_manager.save_model(self.model, epoch)
+
+            # Save model checkpoint and update FAISS
+            model_id = f"epoch_{epoch}"
+            self.checkpoint_manager.save_model_checkpoint(self.model, model_id)
+
+

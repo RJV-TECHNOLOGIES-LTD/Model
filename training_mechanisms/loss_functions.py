@@ -1,10 +1,10 @@
-# Placeholder for loss_functioimport torch.nn.functional as F
+import torch.nn.functional as F
 import logging
 
 def compute_loss(output, target):
     """
     Compute Mean Squared Error (MSE) loss.
-    
+
     :param output: Model predictions.
     :param target: Ground truth labels.
     :return: Computed loss.
@@ -15,4 +15,3 @@ def compute_loss(output, target):
     except Exception as e:
         logging.error(f"Loss computation failed: {e}")
         raise
-ns.py

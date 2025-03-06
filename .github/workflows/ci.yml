@@ -1,1 +1,34 @@
-# Placeholder for ci.yml
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest flake8 bandit
+
+    - name: Run Linting (Flake8)
+      run: flake8 --exclude=env,venv
+
+    - name: Run Security Scan (Bandit)
+      run: bandit -r .
+
+    - name: Run Unit Tests (Pytest)
+      run: pytest tests/
