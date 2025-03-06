@@ -1,1 +1,0 @@
-# Placeholder for contribution_guidelines.md

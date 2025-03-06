@@ -1,7 +1,0 @@
-<api_schema>
-    <input>
-        <type>array</type>
-        <shape>1D</shape>
-        <required>true</required>
-    </input>
-</api_schema>

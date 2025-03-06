@@ -1,6 +1,0 @@
-# Memory Index for FAISS Vector Storage
-# Format: ID | Vector Name | Created At
-
-0 | model_embedding_001 | 2024-03-06 14:22:00
-1 | model_embedding_002 | 2024-03-06 14:23:10
-2 | model_embedding_003 | 2024-03-06 14:24:05
