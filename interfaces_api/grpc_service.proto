@@ -3,7 +3,7 @@ syntax = "proto3";
 package inference;
 
 service InferenceService {
-  // Runs inference and returns predictions
+  // Runs inference on input data and returns predictions
   rpc RunInference (InferenceRequest) returns (InferenceResponse);
   
   // Health check for gRPC API
@@ -11,11 +11,11 @@ service InferenceService {
 }
 
 message InferenceRequest {
-  repeated float input = 1;  // List of input values
+  repeated float input = 1;  // List of input values (1D array)
 }
 
 message InferenceResponse {
-  repeated float result = 1; // Model predictions
+  repeated float result = 1; // List of model predictions
   string status = 2; // "success" or "error"
   string message = 3; // Error message (if applicable)
 }
