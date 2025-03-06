@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ai-inference-container
-        image: ai-inference:latest
+        image: ai-inference:latest  # Replace with your actual container image
         ports:
         - containerPort: 5000  # REST API
         - containerPort: 50051 # gRPC API
