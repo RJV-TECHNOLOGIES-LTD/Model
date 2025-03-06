@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 import logging
+import grpc
 import os
-from inference_mechanisms.inference_engine import InferenceEngine
+import interfaces_api.grpc_service_pb2 as pb2
+import interfaces_api.grpc_service_pb2_grpc as pb2_grpc
 
 # 🚀 Initialize Flask API
 app = Flask(__name__)
@@ -9,30 +11,18 @@ app = Flask(__name__)
 # Set API-wide logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Default model configurations
-MODEL_PATH = "memory_storage/checkpoint_epoch_10.h5"
-MODEL_FORMAT = "h5"
-
-# Ensure the model file exists
-if not os.path.exists(MODEL_PATH):
-    logging.error(f"Model file not found: {MODEL_PATH}")
-    raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
-
-# Load inference engine (Model verification occurs inside `InferenceEngine`)
-try:
-    inference_engine = InferenceEngine(model_format=MODEL_FORMAT, model_path=MODEL_PATH)
-except Exception as e:
-    logging.error(f"Failed to initialize inference engine: {e}")
-    raise
+# gRPC Connection
+channel = grpc.insecure_channel("localhost:50051")
+grpc_stub = pb2_grpc.InferenceServiceStub(channel)
 
 @app.route("/infer", methods=["POST"])
 def run_model():
     """
-    API endpoint for running inference.
+    API endpoint for running inference over both REST and gRPC.
 
     Expected JSON Payload:
     {
-        "input": [[...], [...], ...]  # 2D Array matching model input shape
+        "input": [[...], [...], ...]  # Input tensor array
     }
 
     Returns:
@@ -47,8 +37,15 @@ def run_model():
         return jsonify({"status": "error", "message": "Missing 'input' field in request"}), 400
 
     try:
-        prediction = inference_engine.predict(data)
-        return jsonify({"status": "success", "result": prediction.tolist()})
+        # Convert input to gRPC format
+        grpc_request = pb2.InferenceRequest(input=data["input"])
+        grpc_response = grpc_stub.RunInference(grpc_request)
+
+        return jsonify({
+            "status": grpc_response.status,
+            "result": grpc_response.result,
+            "message": grpc_response.message
+        })
     except Exception as e:
         logging.error(f"Inference failed: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
@@ -56,7 +53,7 @@ def run_model():
 @app.route("/health", methods=["GET"])
 def health_check():
     """
-    API endpoint for checking the health of the inference system.
+    API endpoint for checking the health of the REST and gRPC inference system.
     
     Returns:
     {
@@ -64,14 +61,8 @@ def health_check():
         "message": "API is running"
     }
     """
-    return jsonify({"status": "ok", "message": "API is running"}), 200
+ 
 
-def start_api_server():
-    """
-    Start the REST API Server.
-    """
-    logging.info("Starting REST API Server...")
-    app.run(host="0.0.0.0", port=5000)
 
 if __name__ == "__main__":
     start_api_server()
