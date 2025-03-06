@@ -1,1 +1,17 @@
-# Placeholder for repository_index.ntfs
+# Repository Index
+[interfaces_api]
+  - rest_api.py - REST API for AI execution
+  - grpc_service.proto - Defines gRPC API
+
+[training_mechanisms]
+  - trainer.py - Handles AI model training
+
+[memory_storage]
+  - model_checkpoints.py - Manages model storage
+
+[deployment_automation]
+  - kubernetes_service.yaml - Deploys AI model to Kubernetes
+
+[.github/workflows]
+  - deploy_model.yml - Automates deployment
+  - train_model.yml - Automates training process
