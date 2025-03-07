@@ -1,1 +1,211 @@
-# Placeholder for cd.yml
+name: Continuous Deployment (Extreme Rigor)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: "phai-execution-engine"
+  PYTHON_VERSION: "3.11"
+  DOCKER_REGISTRY: "ghcr.io/${{ github.repository_owner }}/phai-execution-engine"
+
+jobs:
+  pre-checks:
+    name: Pre-Deployment Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate YAML Syntax
+        run: |
+          sudo apt-get install yamllint -y
+          yamllint .
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt || { echo "❌ Dependency installation failed!"; exit 1; }
+
+      - name: Run Static Analysis (Security & Complexity)
+        run: |
+          pip install bandit flake8 mypy
+          bandit -r . || { echo "❌ Security vulnerabilities detected!"; exit 1; }
+          flake8 . || { echo "❌ Linting errors detected!"; exit 1; }
+          mypy . || { echo "❌ Type-checking errors detected!"; exit 1; }
+
+  data-pipeline-validation:
+    name: Validate Data Pipelines
+    runs-on: ubuntu-latest
+    needs: pre-checks
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Data Pipeline Tests
+        run: |
+          pytest tests/data_pipeline || { echo "❌ Data pipeline validation failed!"; exit 1; }
+
+  security-audit:
+    name: Security & Compliance Audit
+    runs-on: ubuntu-latest
+    needs: pre-checks
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "phai-execution-engine"
+          format: "HTML"
+          out: "reports"
+          failOnCVSS: "7"
+
+      - name: Run Security Scans
+        run: |
+          pip install safety
+          safety check || { echo "❌ Security vulnerabilities detected!"; exit 1; }
+
+      - name: CodeQL Static Security Scan
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/security"
+
+  ai-evolution:
+    name: AI Evolution Testing
+    runs-on: ubuntu-latest
+    needs: pre-checks
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run AI Evolution Tests
+        run: |
+          pytest tests/ai_evolution || { echo "❌ AI Evolution tests failed!"; exit 1; }
+
+  quantum-execution:
+    name: Quantum AI Execution Tests
+    runs-on: ubuntu-latest
+    needs: pre-checks
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Quantum Execution Environment
+        run: |
+          sudo apt-get install -y qiskit
+
+      - name: Run Quantum Execution Tests
+        run: |
+          pytest tests/quantum_ai_execution || { echo "❌ Quantum execution tests failed!"; exit 1; }
+
+  self-learning-monitoring:
+    name: Self-Learning AI Monitoring
+    runs-on: ubuntu-latest
+    needs: pre-checks
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Monitor AI Self-Learning Behavior
+        run: |
+          python scripts/self_learning_monitor.py || { echo "❌ Self-learning AI monitoring failed!"; exit 1; }
+
+  build:
+    name: Build & Package Application
+    runs-on: ubuntu-latest
+    needs: [security-audit, data-pipeline-validation, ai-evolution, quantum-execution, self-learning-monitoring]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:latest .
+          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.DOCKER_REGISTRY }}:latest
+
+      - name: Log In to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Docker Image
+        run: docker push ${{ env.DOCKER_REGISTRY }}:latest
+
+  deploy:
+    name: Deploy to Kubernetes / Cloud
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Kubernetes CLI
+        uses: azure/setup-kubectl@v3
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml || { echo "❌ Kubernetes Deployment Failed!"; exit 1; }
+          kubectl apply -f k8s/service.yaml || { echo "❌ Kubernetes Service Setup Failed!"; exit 1; }
+          kubectl rollout status deployment/phai-execution-engine || { echo "❌ Rollout failed! Rolling back..."; kubectl rollout undo deployment/phai-execution-engine; exit 1; }
+
+      - name: Deploy to AWS EKS (Optional)
+        if: success()
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws eks update-kubeconfig --name my-cluster
+          kubectl apply -f k8s/deployment.yaml
+          kubectl rollout status deployment/phai-execution-engine || exit 1
+
+      - name: Deploy to Azure AKS (Optional)
+        if: success()
+        run: |
+          az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+          kubectl apply -f k8s/deployment.yaml
+          kubectl rollout status deployment/phai-execution-engine || exit 1
+
+      - name: Deploy to GCP GKE (Optional)
+        if: success()
+        run: |
+          gcloud container clusters get-credentials my-cluster --zone us-central1-a
+          kubectl apply -f k8s/deployment.yaml
+          kubectl rollout status deployment/phai-execution-engine || exit 1
+
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    steps:
+      - name: Send Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: 'Deployment Bot'
+          SLACK_ICON: ':rocket:'
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: 'Deployment Completed: ${{ job.status }} for branch ${{ github.ref }}'
+
+      - name: Send Email Notification
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Deployment ${{ job.status }}"
+          to: "admin@example.com"
+          body: "Deployment of phai-execution-engine completed with status: ${{ job.status }}."
