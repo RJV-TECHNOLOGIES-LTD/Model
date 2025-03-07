@@ -1,1 +1,0 @@
-Federated AI Execution with Homomorphic Encryption

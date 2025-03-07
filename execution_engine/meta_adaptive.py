@@ -1,1 +1,0 @@
-Self-Reconfigurable AI Models

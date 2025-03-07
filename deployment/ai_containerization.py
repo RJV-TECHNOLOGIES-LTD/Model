@@ -1,1 +1,0 @@
-AI Model Execution in Kubernetes, Docker, Wasm

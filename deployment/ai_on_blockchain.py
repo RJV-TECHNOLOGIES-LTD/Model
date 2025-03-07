@@ -1,1 +1,0 @@
-Decentralized AI Execution with Blockchain Trustless Verification

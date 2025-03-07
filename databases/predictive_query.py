@@ -1,1 +1,0 @@
-AI-Assisted Query Execution & Adaptive Optimization

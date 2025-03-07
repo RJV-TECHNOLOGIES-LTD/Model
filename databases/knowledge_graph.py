@@ -1,1 +1,0 @@
-Neural Knowledge Graph for AI Reasoning & Logic Processing

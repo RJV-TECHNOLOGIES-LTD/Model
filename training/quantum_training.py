@@ -1,1 +1,0 @@
-Ψ(a)-Optimized Quantum AI Learning

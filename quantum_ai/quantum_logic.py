@@ -1,1 +1,0 @@
-Ψ(a) Quantum Logic Processing for AI Decision-Making

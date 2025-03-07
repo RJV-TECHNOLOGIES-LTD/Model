@@ -1,1 +1,0 @@
-Ψ(a) Quantum Model Execution Validation

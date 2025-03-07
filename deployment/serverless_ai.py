@@ -1,1 +1,0 @@
-Decentralized AI Deployment for Maximum Scalability

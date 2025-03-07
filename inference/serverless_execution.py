@@ -1,1 +1,0 @@
-Federated & Decentralized AI Execution (Blockchain & Cloud)
